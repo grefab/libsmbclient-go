@@ -21,6 +21,7 @@ int my_smbc_closedir(SMBCCTX *c, SMBCFILE *dir);
 struct smbc_dirent* my_smbc_readdir(SMBCCTX *c, SMBCFILE *dir);
 SMBCFILE* my_smbc_open(SMBCCTX *c, const char *fname, int flags, mode_t mode);
 ssize_t my_smbc_read(SMBCCTX *c, SMBCFILE *file, void *buf, size_t count);
+ssize_t my_smbc_write(SMBCCTX *c, SMBCFILE *file, void *buf, size_t count);
 void my_smbc_close(SMBCCTX *c, SMBCFILE *f);
 void my_smbc_auth_callback(SMBCCTX *context,
                const char *server_name, const char *share_name,
@@ -260,6 +261,22 @@ func (e *File) Read(buf []byte) (int, error) {
 		return 0, io.EOF
 	} else if c < 0 && err != nil {
 		return c, fmt.Errorf("cannot read: %v", err)
+	}
+	return c, nil
+}
+
+// Write writes up to len(b) bytes to the File. It returns the number of bytes written and any error encountered.
+// At end of file, Read returns 0, io.EOF.
+func (e *File) Write(buf []byte) (int, error) {
+	e.client.smbMu.Lock()
+	defer e.client.smbMu.Unlock()
+
+	cCount, err := C.my_smbc_write(e.client.ctx, e.smbcfile, unsafe.Pointer(&buf[0]), C.size_t(len(buf)))
+	c := int(cCount)
+	if c == 0 {
+		return 0, io.EOF
+	} else if c < 0 && err != nil {
+		return c, fmt.Errorf("cannot write: %v", err)
 	}
 	return c, nil
 }
