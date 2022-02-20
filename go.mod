@@ -1,4 +1,4 @@
-module github.com/mvo5/libsmbclient-go
+module github.com/grefab/libsmbclient-go
 
 go 1.15
 

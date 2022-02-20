@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mvo5/libsmbclient-go"
+	"github.com/grefab/libsmbclient-go"
 )
 
 func openSmbdir(client *libsmbclient.Client, duri string) {
@@ -117,7 +117,7 @@ func main() {
 	flag.Parse()
 
 	client := libsmbclient.New()
-	//client.SetDebug(99)
+	// client.SetDebug(99)
 
 	if withKrb5 {
 		client.SetUseKerberos()

@@ -14,7 +14,7 @@ import (
 
 	. "gopkg.in/check.v1"
 
-	"github.com/mvo5/libsmbclient-go"
+	"github.com/grefab/libsmbclient-go"
 )
 
 func Test(t *testing.T) { TestingT(t) }
@@ -59,7 +59,7 @@ func (s *smbclientSuite) SetUpSuite(c *C) {
 func (s *smbclientSuite) TearDownSuite(c *C) {
 	s.smbdCmd.Process.Kill()
 	// XXX: wait will segfault because libsmbclient overrides sigchld
-	//s.smbdCmd.Wait()
+	// s.smbdCmd.Wait()
 	s.smbdCmd = nil
 }
 
@@ -101,7 +101,7 @@ func (s *smbclientSuite) startSmbd(c *C) {
 	os.Setenv("LIBSMB_PROG", "nc localhost 1445")
 	smbConf := s.generateSmbdConf(c)
 	cmd := exec.Command("smbd", "-FS", "-s", smbConf)
-	//cmd.Stdout = os.Stdout
+	// cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Start()
 	c.Assert(err, IsNil)

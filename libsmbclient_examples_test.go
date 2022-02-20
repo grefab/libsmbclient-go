@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/mvo5/libsmbclient-go"
+	"github.com/grefab/libsmbclient-go"
 )
 
 func ExampleNew() {
