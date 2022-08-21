@@ -7,9 +7,11 @@ import (
 	"unsafe"
 )
 
+// we expect arm64 homebrew in /opt/homebrew/lib and amd64 homebrew in /usr/local/homebrew/lib
+
 /*
-#cgo LDFLAGS: -L/usr/local/homebrew/lib -lsmbclient
-#cgo CFLAGS: -I/usr/local/homebrew/include -I /usr/include/samba-4.0
+#cgo LDFLAGS: -L/opt/homebrew/lib -L/usr/local/homebrew/lib -lsmbclient
+#cgo CFLAGS: -I/opt/homebrew/include -I/usr/local/homebrew/include -I/usr/include/samba-4.0
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
