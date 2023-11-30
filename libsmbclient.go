@@ -12,10 +12,10 @@ import (
 /*
 #cgo LDFLAGS: -L/opt/homebrew/lib -L/usr/local/homebrew/lib -lsmbclient
 #cgo CFLAGS: -I/opt/homebrew/include -I/usr/local/homebrew/include -I/usr/include/samba-4.0
+#cgo pkg-config: smbclient
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
 
 #include <libsmbclient.h>
 
